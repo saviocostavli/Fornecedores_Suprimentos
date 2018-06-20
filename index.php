@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 	<head>
   		<title>Fornecedores VLI</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -26,7 +26,7 @@
                     if(searchString) {
                         $.ajax({
                             type: "POST",
-                            url: "connector/conexao_hana_suprimentos.php",
+                            url: "connector/search_supplier.php",
                             data: data,
                             beforeSend: function(html) {
                                 $("#results").html('');
@@ -48,7 +48,7 @@
   			<div class="jumbotron w3-indigo w3-center">
   				<h1>Suprimentos VL!</h1>
   				<p>Obtenha informações importantes dos nossos fornecedores!</p>
-				<form class="form-inline" method="post" action="connector/conexao_hana_suprimentos.php">
+				<form class="form-inline" method="post" action="connector/search_supplier.php">
 					<div class="input-group" style="text-align:center; margin: 0 auto;">
 						<input type="text" name="search" id="search_box" class='form-control' size="50" placeholder="Informe o CNPJ ou nome do fornecedor." required/>
 						<input type="submit" name="submit_search" value="Search" class="search_button btn btn-danger" /><br />

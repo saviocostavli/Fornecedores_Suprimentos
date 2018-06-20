@@ -28,12 +28,15 @@
             $end_result = '';
             while($row = odbc_fetch_array($rs)){
                 $end_result.=
-                    '<li>'.
-                        '<h3>Fornecedor: '. $row['fornecedor'] .'</h3>
+                    '<li>
+                        <h3>Fornecedor: '. $row['fornecedor'] .'</h3>
                         <b>CNPJ: '. $row['cnpj'] .'</b>  &emsp;&emsp;
                         <b>Pa&iacute;s: '. $row['pais'] .'</b> &emsp;&emsp;
-                        <b>Estado: '. $row['estado'] .'</b> &emsp;&emsp;</p>'.
-                    '</li>';
+                        <b>Estado: '. $row['estado'] .'</b> &emsp;&emsp;'.
+                        '<a href="./fornecedor.php?data='.$row['cnpj'].' ">
+                            <img src="./media/icons/arrow-right-bold-circle.svg" class="w3-round follow_fornecedor" data-toggle="tooltip" title="Ver Fornecedor ">
+                        </a>
+                    </li>';
             }
             echo $end_result;
         }
