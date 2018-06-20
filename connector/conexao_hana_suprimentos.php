@@ -1,5 +1,4 @@
-<?PHP 
-    header('Content-Type: text/html; charset=ISO-8859-1');
+<?PHP
     $server_name = "SAP4HANA BW PROD";
     $username = "93247292";
     $password = "Weverton@1234";
@@ -11,46 +10,31 @@
         echo "</p>\n";
     }
     else {
-                    
-        // never trust what user wrote! We must ALWAYS sanitize user input
-        $forn = $_POST["search"];
-        $forn = htmlentities($forn);
+        $search = $_POST["search"];
+        $search = htmlentities($search);
         
-        $sql = "Select DISTINCT \"for_cd_cnpj\" AS \"cnpj\", \"for_cd_regiao\" AS \"estado\", \"for_cd_pais\" AS \"pais\", \"for_nm_fornecedor\" AS \"nome_fornecedor\" 
-            from \"_SYS_BIC\".\"edw.Views.Suprimentos/mdFornecedores\" where \"for_nm_fornecedor\" like '%".$forn."%' "; //\"for_cd_regiao\" = 'MG' ";
+        $sql = "
+            Select DISTINCT \"for_cd_cnpj\" AS \"cnpj\", \"for_cd_regiao\" AS \"estado\", \"for_cd_pais\" AS \"pais\", \"for_nm_fornecedor\" AS \"fornecedor\"
+            from \"_SYS_BIC\".\"edw.Views.Suprimentos/mdFornecedores\"
+            where upper(\"for_nm_fornecedor\") like concat('%', concat(upper('".$search."'),'%')) OR \"for_cd_cnpj\" like '%".$search."%' ";
 
         $rs = odbc_exec($conn, $sql);
 
         if(count($rs)) {
             $end_result = '';
             while($row = odbc_fetch_array($rs)){
-                $result = $row['nome_fornecedor'];
-                // we will use this to bold the search fornecedor in result
-                $bold = '<span class="found">' . $forn . '</span>';    
-                $end_result.= '<li>' . str_ireplace($forn, $bold, $result) . '</li>';            
+                $end_result.=
+                    '<li>'.
+                        '<h3>Fornecedor: '. $row['fornecedor'] .'</h3>
+                        <b>CNPJ: '. $row['cnpj'] .'</b>  &emsp;&emsp;
+                        <b>Pa&iacute;s: '. $row['pais'] .'</b> &emsp;&emsp;
+                        <b>Estado: '. $row['estado'] .'</b> &emsp;&emsp;</p>'.
+                    '</li>';
             }
             echo $end_result;
         }
         else {
             echo '<li>No results found</li>';
         }
-
-        //while($row = odbc_fetch_array($rs)){
-            //$array[] = $row;
-            //$array[$row['cnpj']] = $row;
-            //print("<pre>");
-            //var_dump($row);
-            //echo "<br>";
-            //print("</pre>");
-            
-            //print($row['nome_fornecedor']);
-            //print($row['cnpj']);
-            //print($row['estado']);
-            //print($row['pais']);
-        //}
-        //print_r($array['04817251000114']);
-        //while($item = $array){
-        //    var_dump($item);
-        //}
     }
 ?>
