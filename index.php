@@ -50,7 +50,7 @@
   				<p>Obtenha informações importantes dos nossos fornecedores!</p>
 				<form class="form-inline" method="post" action="connector/conexao_hana_suprimentos.php">
 					<div class="input-group" style="text-align:center; margin: 0 auto;">
-						<input type="text" name="search" id="search_box" class='form-control' size="50" placeholder="Informe o CNPJ do fornecedor." required/>
+						<input type="text" name="search" id="search_box" class='form-control' size="50" placeholder="Informe o CNPJ ou nome do fornecedor." required/>
 						<input type="submit" name="submit_search" value="Search" class="search_button btn btn-danger" /><br />
 					</div>
                 </form>
