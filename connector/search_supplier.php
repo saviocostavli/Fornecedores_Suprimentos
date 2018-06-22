@@ -33,7 +33,7 @@
                         <b>CNPJ: '. $row['cnpj'] .'</b>  &emsp;&emsp;
                         <b>Pa&iacute;s: '. $row['pais'] .'</b> &emsp;&emsp;
                         <b>Estado: '. $row['estado'] .'</b> &emsp;&emsp;'.
-                        '<a href="./fornecedor.php?data='.$row['cnpj'].' ">
+                        '<a href="./fornecedor.php?cnpj='.$row['cnpj'].'&fornecedor='.$row['fornecedor'].' ">
                             <img src="./media/icons/arrow-right-bold-circle.svg" class="w3-round follow_fornecedor" data-toggle="tooltip" title="Ver Fornecedor ">
                         </a>
                     </li>';
