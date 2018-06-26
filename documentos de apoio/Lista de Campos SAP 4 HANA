@@ -1,0 +1,18 @@
+Lista de Campos SAP 4 HANA
+
+----- mdFornecedores -----
+CNPJ - for_cd_cnpj
+Estado - for_cd_regiao
+País - for_cd_pais
+Nome do Fornecedor - for_nm_fornecedor
+Número da Conta do Fornecedor - for_no_conta_fornecedor
+
+
+----- fdContratosDeCompras -----
+
+Valor fixado do contrato - cts_vl_fixado_area_distribuicao
+Número da conta do fornecedor - cts_no_conta_fornecedor
+Código do Contrato (docum de compras) - cts_no_documento_compra
+Início da Validade - cts_dt_fim_periodo_validade
+Fim da validade - cts_dt_fim_periodo_validade
+Valor líquido dos pedidos ("Valor executado") - cts_vl_liquido_pedido_moeda
