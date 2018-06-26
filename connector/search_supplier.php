@@ -18,9 +18,9 @@
         $search = trim($search);
         
         $sql = "
-            Select DISTINCT \"for_cd_cnpj\" AS \"cnpj\", \"for_cd_regiao\" AS \"estado\", \"for_cd_pais\" AS \"pais\", \"for_nm_fornecedor\" AS \"fornecedor\"
-            from \"_SYS_BIC\".\"edw.Views.Suprimentos/mdFornecedores\"
-            where upper(\"for_nm_fornecedor\") like concat('%', concat(upper('".$search."'),'%')) OR \"for_cd_cnpj\" like '%".$search."%' ";
+            SELECT DISTINCT Fornecedores.\"for_cd_cnpj\" AS \"cnpj\", Fornecedores.\"for_cd_regiao\" AS \"estado\", Fornecedores.\"for_cd_pais\" AS \"pais\", Fornecedores.\"for_nm_fornecedor\" AS \"fornecedor\"
+            FROM \"_SYS_BIC\".\"edw.Views.Suprimentos/mdFornecedores\" AS Fornecedores
+            WHERE upper(Fornecedores.\"for_nm_fornecedor\") like concat('%', concat(upper('".$search."'),'%')) OR Fornecedores.\"for_cd_cnpj\" like '%".$search."%' ";
 
         $rs = odbc_exec($conn, $sql);
 
