@@ -25,18 +25,16 @@
 
         <script type="text/javascript">
             function carregarFornecedor(){
-                var searchCnpj = "<?php echo $_GET["cnpj"]; ?>";
                 var searchFornecedor = "<?php echo $_GET["fornecedor"]; ?>";
-                
-                //var data = "{ cnpj=" + searchCnpj + ", fornecedor=" + searchFornecedor + "}";
 
                 $.ajax({
                     type: "POST",
                     url: "connector/supplier_master_data.php",
-                    data: { cnpj: searchCnpj, fornecedor: searchFornecedor},
-                    success: function(html){
-                        $("#nome_fornecedor").show();
-                        $("#nome_fornecedor").append(html);
+                    data: { fornecedor: searchFornecedor},
+                    success: function(dts){
+                        //$("#nome_fornecedor").show();
+                        $("#nome_fornecedor").append(searchFornecedor);
+                        $("#qtd_contratos").append(dts);
                     }
                 });
             }
@@ -45,7 +43,7 @@
     
 	<body onload="carregarFornecedor()">
 	    <div class="w3-container w3-center">
-            <div id="nome_fornecedor"> </div>
+            <div></br><h1><b><p id="nome_fornecedor">  </p></b></h1></br> </div>
 
             <div class="w3-card-4 w3-center" style="background-color:#e0e0e0; width:90%; text-align:center; margin: 0 auto;">
                 <header class="w3-container" style="background-color:#3777bc;">
@@ -53,7 +51,7 @@
                 </header>
 
                 <div class="w3-container w3-cell" style="text-align:left;">
-                    <p><b>Número total de contratos:</b> </p>
+                    <p id="qtd_contratos"><b>Número total de contratos:</b> </p>
                     <p><b>Número total de contratos vigentes:</b>  </p>
                     <p><b>Prazo final do último contrato:</b>  </p>
                 </div>
