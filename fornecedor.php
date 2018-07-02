@@ -31,10 +31,17 @@
                     type: "POST",
                     url: "connector/supplier_master_data.php",
                     data: { fornecedor: searchFornecedor},
-                    success: function(dts){
+                    success: function(result){
                         //$("#nome_fornecedor").show();
-                        $("#nome_fornecedor").append(searchFornecedor);
-                        $("#qtd_contratos").append(dts);
+                        var dados_mestre = JSON.parse(result);
+                        $("#nome_fornecedor").append(dados_mestre.fornecedor);
+                        $("#qtd_contratos").append(dados_mestre.qtd_contratos);
+                        $("#total_contratado").append((Number(dados_mestre.total_contratado)).toLocaleString(undefined,{minimumFractionDigits:2}));
+                        var fim = dados_mestre.fim_validade;
+                        var fim_val = new Date(fim.substring(0,4),fim.substring(4,6),fim.substring(6,8)); 
+                        $("#prazo_final_ultimo_contrato").append(fim_val.toLocaleDateString());
+                        
+                        //$("#total_consumido").append((Number(dados_mestre.total_consumido)).toLocaleoString(undefined,{minimumFractionDigits:2}));
                     }
                 });
             }
@@ -53,15 +60,15 @@
                 <div class="w3-container w3-cell" style="text-align:left;">
                     <p id="qtd_contratos"><b>Número total de contratos:</b> </p>
                     <p><b>Número total de contratos vigentes:</b>  </p>
-                    <p><b>Prazo final do último contrato:</b>  </p>
+                    <p id="prazo_final_ultimo_contrato"><b>Prazo final do último contrato:</b>  </p>
                 </div>
 
                 <div class="w3-container w3-cell" style="width: 20%; text-align:left;">
                 </div>
 
                 <div class="w3-container w3-cell" style="text-align:left;">
-                    <p><b>Valor total de contratado (R$):</b> </p>
-                    <p><b>Valor total consumido (R$):</b>  </p>
+                    <p id="total_contratado"><b>Valor total de contratado (R$):</b> </p>
+                    <p id="total_consumido"><b>Valor total consumido (R$):</b>  </p>
                     <p><b>Saldo (R$):</b>  </p>
                 </div>
                 <!--
