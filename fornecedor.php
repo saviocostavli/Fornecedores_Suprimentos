@@ -40,6 +40,9 @@
                         var fim = dados_mestre.fim_validade;
                         var fim_val = new Date(fim.substring(0,4),fim.substring(4,6),fim.substring(6,8)); 
                         $("#prazo_final_ultimo_contrato").append(fim_val.toLocaleDateString());
+                        $("#qtd_contratos_validos").append(dados_mestre.qtd_contratos_validos);
+                        $("#valor_consumido").append((Number(dados_mestre.valor_consumido)).toLocaleString(undefined,{minimumFractionDigits:2}));
+                        $("#saldo_contrato").append((Number(dados_mestre.saldo_contrato)).toLocaleString(undefined,{minimumFractionDigits:2}));
                         
                         //$("#total_consumido").append((Number(dados_mestre.total_consumido)).toLocaleoString(undefined,{minimumFractionDigits:2}));
                     }
@@ -59,7 +62,7 @@
 
                 <div class="w3-container w3-cell" style="text-align:left;">
                     <p id="qtd_contratos"><b>Número total de contratos:</b> </p>
-                    <p><b>Número total de contratos vigentes:</b>  </p>
+                    <p id='qtd_contratos_validos'><b>Número total de contratos vigentes:</b>  </p>
                     <p id="prazo_final_ultimo_contrato"><b>Prazo final do último contrato:</b>  </p>
                 </div>
 
@@ -68,8 +71,8 @@
 
                 <div class="w3-container w3-cell" style="text-align:left;">
                     <p id="total_contratado"><b>Valor total de contratado (R$):</b> </p>
-                    <p id="total_consumido"><b>Valor total consumido (R$):</b>  </p>
-                    <p><b>Saldo (R$):</b>  </p>
+                    <p id="valor_consumido"><b>Valor total consumido (R$):</b>  </p>
+                    <p id="saldo_contrato"><b>Saldo (R$):</b>  </p>
                 </div>
                 <!--
                 <div class="w3-container" style="text-align:center; margin: 0 auto;">
