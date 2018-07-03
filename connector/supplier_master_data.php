@@ -19,6 +19,8 @@
         $fornecedor = $_POST["fornecedor"];
         $fornecedor = htmlentities($fornecedor);
         
+        //upper(Fornecedores.\"for_nm_fornecedor\") like concat('%', concat(upper('".$fornecedor."'),'%'))
+
         $sql_contratos = "
             SELECT Fornecedores.\"for_nm_fornecedor\" AS \"fornecedor\", COUNT(Contratos.\"cts_no_documento_compra\") AS \"qtd_contratos\",
             SUM(Contratos.\"cts_vl_fixado_area_distribuicao\") AS \"total_contratado\", SUM(Contratos.\"cts_vl_liquido_pedido_moeda\") AS \"total_consumido\"
@@ -26,7 +28,7 @@
             FROM \"_SYS_BIC\".\"edw.Views.Suprimentos/mdFornecedores\" AS Fornecedores
             INNER JOIN \"_SYS_BIC\".\"edw.Views.Suprimentos/fdContratosDeCompras\" AS Contratos ON Fornecedores.\"for_no_conta_fornecedor\" = Contratos.\"cts_no_conta_fornecedor\"
             
-            WHERE upper(Fornecedores.\"for_nm_fornecedor\") like concat('%', concat(upper('".$fornecedor."'),'%'))
+            WHERE Fornecedores.\"for_no_conta_fornecedor\"  = '".$fornecedor."'
             GROUP BY Fornecedores.\"for_nm_fornecedor\"";
         $result_qtd_contratos = odbc_exec($conn, $sql_contratos);
         
@@ -37,7 +39,7 @@
             FROM \"_SYS_BIC\".\"edw.Views.Suprimentos/mdFornecedores\" AS Fornecedores
             INNER JOIN \"_SYS_BIC\".\"edw.Views.Suprimentos/fdContratosDeCompras\" AS Contratos ON Fornecedores.\"for_no_conta_fornecedor\" = Contratos.\"cts_no_conta_fornecedor\"
             
-            WHERE upper(Fornecedores.\"for_nm_fornecedor\") like concat('%', concat(upper('".$fornecedor."'),'%')) ";
+            WHERE Fornecedores.\"for_no_conta_fornecedor\"  = '".$fornecedor."' ";
         $result_prazo_final = odbc_exec($conn, $sql_prazo_final);
         
 
@@ -47,7 +49,7 @@
             FROM \"_SYS_BIC\".\"edw.Views.Suprimentos/mdFornecedores\" AS Fornecedores
             INNER JOIN \"_SYS_BIC\".\"edw.Views.Suprimentos/fdContratosDeCompras\" AS Contratos ON Fornecedores.\"for_no_conta_fornecedor\" = Contratos.\"cts_no_conta_fornecedor\"
             
-            WHERE upper(Fornecedores.\"for_nm_fornecedor\") like concat('%', concat(upper('".$fornecedor."'),'%'))  AND Contratos.\"cts_dt_fim_periodo_validade\" >= ".$data."
+            WHERE Fornecedores.\"for_no_conta_fornecedor\"  = '".$fornecedor."' AND Contratos.\"cts_dt_fim_periodo_validade\" >= ".$data."
             GROUP BY Fornecedores.\"for_nm_fornecedor\"
             ";
         $result_contratos_vigentes = odbc_exec($conn, $sql_contratos_vigentes);
@@ -61,7 +63,7 @@
             INNER JOIN \"_SYS_BIC\".\"edw.Views.Suprimentos/mdFornecedores\" AS Fornecedores ON Fornecedores.\"for_no_conta_fornecedor\" = Contratos.\"cts_no_conta_fornecedor\"
             INNER JOIN \"_SYS_BIC\".\"edw.Views.Suprimentos/fdPedidosDeCompras\" AS Pedidos ON Contratos.\"cts_no_documento_compra\" = Pedidos.\"ped_no_contrato_superior\"
             
-            WHERE upper(Fornecedores.\"for_nm_fornecedor\") like concat('%', concat(upper('".$fornecedor."'),'%'))
+            WHERE Fornecedores.\"for_no_conta_fornecedor\"  = '".$fornecedor."'
             GROUP BY Fornecedores.\"for_nm_fornecedor\"
             ";
         $result_valor_consumido = odbc_exec($conn, $sql_valor_consumido);
@@ -76,11 +78,14 @@
             $row_valor_consumido = odbc_fetch_array($result_valor_consumido);
             
             $array = array(
-                'qtd_contratos' => $row_contratos['qtd_contratos'], 'fornecedor' => $row_contratos['fornecedor'], 
-                'total_contratado' => $row_contratos['total_contratado'], 'total_consumido' => $row_contratos['total_consumido'], 
-                'fim_validade' => $row_prazo_final['fim_validade'], 'qtd_contratos_validos' => $row_contratos_vigentes['qtd_contratos_validos'],
+                'qtd_contratos' => $row_contratos['qtd_contratos'],
+                'fornecedor' => $row_contratos['fornecedor'], 
+                'total_contratado' => $row_contratos['total_contratado'],
+                'total_consumido' => $row_contratos['total_consumido'], 
+                'fim_validade' => $row_prazo_final['fim_validade'],
+                'qtd_contratos_validos' => $row_contratos_vigentes['qtd_contratos_validos'],
                 'valor_consumido' => $row_valor_consumido['valor_consumido'], 
-                'saldo_contrato' => ((int)$row_contratos['total_contratado'] - (int)$row_valor_consumido['valor_consumido'])
+                'saldo_contrato' => ((float)$row_contratos['total_contratado'] - (float)$row_valor_consumido['valor_consumido'])
             );
             echo json_encode($array);
         }

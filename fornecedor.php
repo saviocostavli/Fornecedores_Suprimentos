@@ -25,7 +25,7 @@
 
         <script type="text/javascript">
             function carregarFornecedor(){
-                var searchFornecedor = "<?php echo $_GET["fornecedor"]; ?>";
+                var searchFornecedor = "<?php echo $_GET["conta_fornecedor"]; ?>";
 
                 $.ajax({
                     type: "POST",
