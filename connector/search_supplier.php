@@ -1,7 +1,7 @@
 <?PHP
     $server_name = "SAP4HANA BW PROD";
     $username = "93247292";
-    $password = "Weverton@1234";
+    $password = "Weverton@123456";
     $conn = odbc_connect($server_name, $username, $password, SQL_CUR_USE_ODBC);
 
     header('Content-Type: text/html; charset=ISO-8859-1');

@@ -43,8 +43,7 @@
                         $("#qtd_contratos_validos").append(dados_mestre.qtd_contratos_validos);
                         $("#valor_consumido").append((Number(dados_mestre.valor_consumido)).toLocaleString(undefined,{minimumFractionDigits:2}));
                         $("#saldo_contrato").append((Number(dados_mestre.saldo_contrato)).toLocaleString(undefined,{minimumFractionDigits:2}));
-                        
-                        //$("#total_consumido").append((Number(dados_mestre.total_consumido)).toLocaleoString(undefined,{minimumFractionDigits:2}));
+                        $("#lista_contratos").append(dados_mestre.lista_contratos);
                     }
                 });
             }
@@ -74,9 +73,8 @@
                     <p id="valor_consumido"><b>Valor total consumido (R$):</b>  </p>
                     <p id="saldo_contrato"><b>Saldo (R$):</b>  </p>
                 </div>
-                <!--
                 <div class="w3-container" style="text-align:center; margin: 0 auto;">
-                    <table class="w3-table-all">
+                    <table id="lista_contratos" class="w3-table-all">
                         <thead>
                             <tr style="background-color:#3777bc; color:white">
                                 <th colspan="5">Maiores contratos vigentes:</th>
@@ -89,30 +87,8 @@
                             <td><b>Data Início: </b></td>
                             <td><b>Data Fim: </b></td>
                         </tr>
-                        <tr>
-                            <td>Fornecimento de tilhos de aço</td>
-                            <td>40.000.000,00</td>
-                            <td>13.000.000,00</td>
-                            <td>01/01/2016</td>
-                            <td>01/01/2016</td>
-                        </tr>
-                        <tr>
-                            <td>Fornecimento de tilhos de aço</td>
-                            <td>40.000.000,00</td>
-                            <td>13.000.000,00</td>
-                            <td>01/01/2016</td>
-                            <td>01/01/2016</td>
-                        </tr>
-                        <tr>
-                            <td>Fornecimento de tilhos de aço</td>
-                            <td>40.000.000,00</td>
-                            <td>13.000.000,00</td>
-                            <td>01/01/2016</td>
-                            <td>01/01/2016</td>
-                        </tr>
                     </table>
                 </div>
-                -->
                 </br>
             </div>
         </div>
