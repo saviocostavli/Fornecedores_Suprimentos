@@ -38,8 +38,8 @@
                         $("#qtd_contratos").append(dados_mestre.qtd_contratos);
                         $("#total_contratado").append((Number(dados_mestre.total_contratado)).toLocaleString(undefined,{minimumFractionDigits:2}));
                         var fim = dados_mestre.fim_validade;
-                        var fim_val = new Date(fim.substring(0,4),fim.substring(4,6),fim.substring(6,8)); 
-                        $("#prazo_final_ultimo_contrato").append(fim_val.toLocaleDateString());
+                        var fim_val = new Date(fim.substring(0,4),fim.substring(4,6)-1,fim.substring(6,8)); 
+                        $("#prazo_final_ultimo_contrato").append(fim_val.toLocaleDateString('en-GB'));
                         $("#qtd_contratos_validos").append(dados_mestre.qtd_contratos_validos);
                         $("#valor_consumido").append((Number(dados_mestre.valor_consumido)).toLocaleString(undefined,{minimumFractionDigits:2}));
                         $("#saldo_contrato").append((Number(dados_mestre.saldo_contrato)).toLocaleString(undefined,{minimumFractionDigits:2}));
@@ -81,7 +81,7 @@
                             </tr>
                         </thead>
                         <tr>
-                            <td><b>Objeto: </b></td>
+                            <td><b>Numero do Contrato: </b></td>
                             <td><b>Valor (R$): </b></td>
                             <td><b>Saldo (R$): </b></td>
                             <td><b>Data Início: </b></td>

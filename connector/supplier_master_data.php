@@ -1,12 +1,13 @@
 <?PHP
     $server_name = "SAP4HANA BW PROD";
-    $username = "93247292";
-    $password = "Weverton@123456";
+    $username = "Sistemsup";
+    $password = "Sisup@2018";
     $conn = odbc_connect($server_name, $username, $password, SQL_CUR_USE_ODBC);
     
     date_default_timezone_set('America/Sao_Paulo');
     $data_hoje = date("Ymd");
     $data = (int)$data_hoje;
+
 
     header('Content-Type: text/html; charset=ISO-8859-1');
     if(!($conn)){
@@ -79,7 +80,7 @@
             INNER JOIN \"_SYS_BIC\".\"edw.Views.Suprimentos/mdFornecedores\" AS Fornecedores ON Fornecedores.\"for_no_conta_fornecedor\" = Contratos.\"cts_no_conta_fornecedor\"
             INNER JOIN \"_SYS_BIC\".\"edw.Views.Suprimentos/fdPedidosDeCompras\" AS Pedidos ON Pedidos.\"ped_no_contrato_superior\" = Contratos.\"cts_no_documento_compra\"
             
-            WHERE Fornecedores.\"for_no_conta_fornecedor\"  = '0060001161' AND Contratos.\"cts_dt_fim_periodo_validade\" >= ".$data."
+            WHERE Fornecedores.\"for_no_conta_fornecedor\"  = '".$fornecedor."' AND Contratos.\"cts_dt_fim_periodo_validade\" >= ".$data."
             GROUP BY 
                 Fornecedores.\"for_nm_fornecedor\", Contratos.\"cts_dt_Inicio_periodo_validade\",
                 Contratos.\"cts_dt_fim_periodo_validade\", Contratos.\"cts_vl_fixado_area_distribuicao\",
@@ -99,13 +100,19 @@
 
             $lista_contratos = "";
             while ($row_lista_contratos = odbc_fetch_array($result_lista_contratos)) {
+                $inicio = $row_lista_contratos['inicio_contrato'];
+                $inicio_val = substr($inicio, 6,  2).'/'.substr($inicio, 4,  2).'/'.substr($inicio, 0,  4);
+
+                $fim = $row_lista_contratos['fim_contrato'];
+                $fim_val = substr($fim, 6,  2).'/'.substr($fim, 4,  2).'/'.substr($fim, 0,  4);
+
                 $lista_contratos .="
                     <tr>
                         <td>".$row_lista_contratos['codigo_contrato']."</td>
-                        <td>".$row_lista_contratos['valor_contrato']."</td>
-                        <td>".((float)$row_lista_contratos['valor_contrato'] - (float)$row_lista_contratos['valor_consumido'])."</td>
-                        <td>".$row_lista_contratos['inicio_contrato']."</td>
-                        <td>".$row_lista_contratos['fim_contrato']."</td>
+                        <td> R$ ".number_format($row_lista_contratos['valor_contrato'], 2, ',', '.')."</td>
+                        <td> R$ ".number_format(((float)$row_lista_contratos['valor_contrato'] - (float)$row_lista_contratos['valor_consumido']), 2, ',', '.')."</td>
+                        <td>".$inicio_val."</td>
+                        <td>".$fim_val."</td>
                     </tr>";
             }
             
